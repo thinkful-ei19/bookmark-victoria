@@ -48,11 +48,10 @@ const bookmark = (function() {
   function generateBookmarksFromString(bookmark) {
     return   `
     <form class="js-bookmark-form bookmark js-bookmark-element" data-item-id="${bookmark.id}">
-        <input type="text" class="bookmark-item-title" value="${bookmark.title}">
-        <input type="text" class="bookmark-item-description" value="${bookmark.desc}">
-        <input type="text" class="bookmark-item-link" value="${bookmark.url}">
-        <select class="bookmark-item-rating" name="rating-entry">
-          <option value="null">All</option>
+        Title: <input type="text" class="bookmark-item-title-edit" value="${bookmark.title}">
+        Description: <input type="text" class="bookmark-item-description-edit" value="${bookmark.desc}">
+        URL: <input type="text" class="bookmark-item-link-edit" value="${bookmark.url}">
+        <select class="bookmark-item-rating-edit">
           <option value="1">1 star</option>
           <option value="2">2 stars</option>
           <option value="3">3 stars</option>
@@ -67,13 +66,9 @@ const bookmark = (function() {
 
   function generateBookmarkItemsString(bookmarkList) {
     const bookmarks = bookmarkList.map((bookmark) => {
-      if (bookmark.edit === true) {
-        return generateBookmarksFromString(bookmark);
-      } else if (bookmark.expand === true) {
-        return generateBookmarksLongString(bookmark);
-      } else {
-        return generateBookmarksShortString(bookmark);
-      }
+      if (bookmark.edit)        return generateBookmarksFromString(bookmark);
+      else if (bookmark.expand) return generateBookmarksLongString(bookmark);
+      else                      return generateBookmarksShortString(bookmark);
     });
     return bookmarks.join('');
   }
@@ -157,10 +152,10 @@ const bookmark = (function() {
   function handleSaveEdit() {
     $('.bookmark-list').on('click', '.js-save-bookmark-edit', (event) => {
       event.preventDefault();
-      const editTitle = $('.bookmark-item-title').val();
-      const editDesc = $('.bookmark-item-description').val();
-      const editUrl = $('.bookmark-item-link').val();
-      const editRating = $('.bookmark-item-rating').val();
+      const editTitle = $('.bookmark-item-title-edit').val();
+      const editDesc = $('.bookmark-item-description-edit').val();
+      const editUrl = $('.bookmark-item-link-edit').val();
+      const editRating = $('.bookmark-item-rating-edit').val();
       const id = getBookmarkId(event.currentTarget);
       api.editBookmark(editDesc, editRating, editTitle, editUrl, id, (editBookmark) => {
         store.findAndEdit(editDesc, editRating, editTitle, editUrl, id);
