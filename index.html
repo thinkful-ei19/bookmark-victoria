@@ -8,33 +8,38 @@
   <link rel="stylesheet" href="styles/index.css">
 </head>
 
-<header class="header" role="banner">
-    <h1 class="title">My Bookmarks</h1>
-    <button class="header-add js-add-item">Add bookmark</button>
-    <form class="header-rating">
-      <label for="rating">Filter by rating</label>
-      <select class="rating-filter" name="rating">
-        <option value="1 star">1</option>
-        <option value="2 stars">2</option>
-        <option value="3 stars">3</option>
-        <option value="4 stars">4</option>
-        <option value="5 stars">5</option>
-      </select>
-    </form>
-  </header>
-
   <body>
+    <header class="header" role="banner">
+      <h1 class="title">My Bookmarks</h1>
+      <div class="row">
+        <div>
+          <form class="header-rating">
+            <label for="rating">Filter by rating</label>
+            <select class="rating-filter" name="rating">
+              <option value="1">1 star</option>
+              <option value="2">2 stars</option>
+              <option value="3">3 stars</option>
+              <option value="4">4 stars</option>
+              <option value="5">5 stars</option>
+            </select>
+          </form>
+        </div>
+        <div>
+          <button class="header-add js-add-item">Add bookmark</button>
+        </div>
+      </div>
+    </header>
 
     <form id="js-bookmark-template">
       <input type="text" name="bookmark-title-entry" class="title-add" placeholder="add title">
       <input type="url" name="bookmark-url-entry" placeholder="http://www.example.com">
       <input type="text" name="bookmark-description-entry" class="description-add" placeholder="describe your bookmark...">
       <select class="rating-add" name="bookmark-rating-entry">
-        <option value="1 star">1</option>
-        <option value="2 stars">2</option>
-        <option value="3 stars">3</option>
-        <option value="4 stars">4</option>
-        <option value="5 stars">5</option>
+        <option value="1">1 star</option>
+        <option value="2">2 stars</option>
+        <option value="3">3 stars</option>
+        <option value="4">4 stars</option>
+        <option value="5">5 stars</option>
       </select>
       <button type="submit">Add</button>
       <button type="cancel">Cancel</button>
