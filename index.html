@@ -30,9 +30,9 @@
       </div>
     </header>
 
-    <form id="js-bookmark-template">
+    <form class="js-bookmark-template bookmark-template">
       <input type="text" name="bookmark-title-entry" class="title-add" placeholder="add title">
-      <input type="url" name="bookmark-url-entry" placeholder="http://www.example.com">
+      <input type="url" name="bookmark-url-entry" class="url-add" placeholder="http://www.example.com">
       <input type="text" name="bookmark-description-entry" class="description-add" placeholder="describe your bookmark...">
       <select class="rating-add" name="bookmark-rating-entry">
         <option value="1">1 star</option>
@@ -41,8 +41,8 @@
         <option value="4">4 stars</option>
         <option value="5">5 stars</option>
       </select>
-      <button type="submit">Add</button>
-      <button type="cancel">Cancel</button>
+      <button class="js-submit-bookmark" type="submit">Add</button>
+      <button class="js-cancel-bookmark" type="cancel">Cancel</button>
     </form>
 
     <ul class="bookmark-list">
