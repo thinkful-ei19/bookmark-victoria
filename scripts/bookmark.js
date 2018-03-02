@@ -5,10 +5,10 @@ const bookmark = (function() {
     return   `
     <li class="js-bookmark-element bookmark" data-item-id="${item.id}">
       <div class="bookmark-item">
-        <p class="bookmark-item-title">Joe Rogan podcast</p>
-        <p class="bookmark-item-rating">Rating: <span class="rating-stars">2</span></p>
-        <p class="bookmark-item-description">Joe chatting with Tim Minchin</p>
-        <a href="#" class="bookmark-item-link">joroganpodcast.com</a>
+        <p class="bookmark-item-title">${item.title}</p>
+        <p class="bookmark-item-rating">Rating: <span class="rating-stars">${item.rating}</span></p>
+        <p class="bookmark-item-description">${item.desc}</p>
+        <a href="#" class="bookmark-item-link">${item.url}</a>
       </div>
       <div class="item-controls">
         <button class="bookmark-item-toggle js-bookmark-toggle">
@@ -27,8 +27,8 @@ const bookmark = (function() {
     return   `
     <li class="js-bookmark-element bookmark" data-item-id="${item.id}">
       <div class="bookmark-item">
-        <p class="bookmark-item-title">Joe Rogan podcast</p>
-        <p class="bookmark-item-rating">Rating: <span class="rating-stars">2</span></p>
+        <p class="bookmark-item-title">${item.title}</p>
+        <p class="bookmark-item-rating">Rating: <span class="rating-stars">${item.rating}</span></p>
       </div>
       <div class="item-controls">
         <button class="bookmark-item-toggle js-bookmark-toggle">
@@ -43,19 +43,19 @@ const bookmark = (function() {
     }
 
   function generateShoppingItemsString(bookmarkList) {
-    const items = bookmarkList.map((bookmark) => {
+    const bookmarks = bookmarkList.map((bookmark) => {
       if (bookmark.expand === true) {
         return generateBookmarksLongString(bookmark);
       } else {
         return generateBookmarksShortString(bookmark);
       }
     })
-    return items.join('');
+    return bookmarks.join('');
   }
 
-  function render() {
-    const bookmarksItemString = generateShoppingItemsString(store.items);
-    $('.bookmark-list').html(bookmarksItemString)
+  function render(bookmarks = store.bookmarks) { //default value
+    const bookmarksItemString = generateShoppingItemsString(bookmarks);
+    $('.bookmark-list').html(bookmarksItemString);
   }
 
   function getBookmarkId(item) {
@@ -67,10 +67,10 @@ const bookmark = (function() {
   function handleShowDetails() {
     $('.bookmark-list').on('click', '.js-bookmark-toggle', event => {
       const id = getBookmarkId(event.currentTarget);
-      store.items.forEach((item, idx) => {
+      store.bookmarks.forEach((item, idx) => {
         if (item.id === id) {
-          store.items[idx].expand = !store.items[idx].expand;
-          console.log('STORE ITEM', store.items[idx])
+          store.bookmarks[idx].expand = !store.bookmarks[idx].expand;
+          console.log('STORE ITEM', store.bookmarks[idx])
           console.log('ITEM RENDER', item)
         }
       });
@@ -118,12 +118,15 @@ const bookmark = (function() {
     });
   }
 
-//   function handleFilterClick() {
-//   $('.js-filter-checked').click(() => {
-//     store.toggleCheckedFilter();
-//     render();
-//   });
-// }
+  function handleFilterRating() {
+    $('.header-rating').on('change', '.rating-filter', () => {
+      const setRating = $('.rating-filter').val()
+      console.log(setRating, 'RATING');
+      const filtered = store.filterRating(setRating);
+      console.log(filtered);
+      render(filtered);
+    });
+  }
 
   function bindEventListeners() {
     handleShowDetails();
@@ -131,7 +134,7 @@ const bookmark = (function() {
     handleCancelOnAdd();
     handleAddBookmark();
     handleSubmitBookmark();
-
+    handleFilterRating();
   };
 
   return{
