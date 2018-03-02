@@ -1,8 +1,8 @@
 $(document).ready(function() {
   bookmark.bindEventListeners()
-  api.getItems((items) => {
-    console.log(items);
-    items.forEach(item => {
+  api.getItems((bookmarks) => {
+    console.log(bookmarks);
+    bookmarks.forEach(item => {
       store.addBookmark(item)
     });
     bookmark.render();
