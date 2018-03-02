@@ -1,6 +1,6 @@
 const store = (function(){
 
-  const addItem = function(item) {
+  const addBookmark = function(item) {
     item.expand = false;
     this.items.push(item);
     console.log(this.items, 'items')
@@ -16,7 +16,7 @@ const store = (function(){
 
   return{
     items: [],
-    addItem: addItem,
+    addBookmark: addBookmark,
     findAndDelete: findAndDelete
   };
 })();
