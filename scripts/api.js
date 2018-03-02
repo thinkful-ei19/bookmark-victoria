@@ -4,8 +4,19 @@ const api = (function () {
   function getItems(callback) {
     $.getJSON(`${BASE_URL}/bookmarks`, callback);
   }
+
+  function deleteBookmark(id, callback) {
+    const deletePayload = {
+      url: `${BASE_URL}/bookmarks/${id}`,
+      method: 'DELETE',
+      success: callback
+    };
+    $.ajax(deletePayload);
+  }
+
   return {
-    getItems: getItems
+    getItems: getItems,
+    deleteBookmark: deleteBookmark
   };
 })();
 api;
