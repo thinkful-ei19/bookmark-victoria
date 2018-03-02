@@ -89,9 +89,49 @@ const bookmark = (function() {
     });
   }
 
+  function handleCancelOnAdd() {
+    $('.js-bookmark-template').on('click', '.js-cancel-bookmark', () => {
+      $('.js-bookmark-template').css('display', 'none');
+    });
+    $('.js-bookmark-template').off('focusout', () => {
+      $('.js-bookmark-template').css('display', 'none');
+    });
+  }
+
+  function handleAddBookmark() {
+    $('.row').on('click', '.js-add-item', () => {
+      $('.js-bookmark-template').css('display', 'block');
+    })
+  }
+
+  function handleSubmitBookmark() {
+    $('.js-bookmark-template').on('click', '.js-submit-bookmark', (event) => {
+      event.preventDefault();
+      const newTitle = $('.title-add').val();
+      const newUrl = $('.url-add').val();
+      const newDesc = $('.description-add').val();
+      const newRating = $('.rating-add').val();
+      api.createBookmark(newDesc, newRating, newTitle, newUrl, (newBookmark) => {
+        store.addBookmark(newBookmark);
+        render();
+      })
+    });
+  }
+
+//   function handleFilterClick() {
+//   $('.js-filter-checked').click(() => {
+//     store.toggleCheckedFilter();
+//     render();
+//   });
+// }
+
   function bindEventListeners() {
     handleShowDetails();
     handleDelete();
+    handleCancelOnAdd();
+    handleAddBookmark();
+    handleSubmitBookmark();
+
   };
 
   return{
