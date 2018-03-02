@@ -2,8 +2,8 @@ const store = (function(){
 
   const addBookmark = function(item) {
     item.expand = false;
+    item.edit = false;
     this.bookmarks.push(item);
-    console.log(this.bookmarks, 'bookmarks')
   };
 
   const findById = function(id) {
@@ -18,11 +18,39 @@ const store = (function(){
     return this.bookmarks.filter(item => item.rating >= setRating)
   };
 
+  const findAndToggleEdit = function(id) {
+    store.bookmarks.forEach((item, idx) => {
+      if (item.id === id) {
+        store.bookmarks[idx].edit = !store.bookmarks[idx].edit;
+      }
+    });
+  };
+
+  const findAndToggleExpand = function(id) {
+    store.bookmarks.forEach((item, idx) => {
+      if (item.id === id) store.bookmarks[idx].expand = !store.bookmarks[idx].expand;
+    });
+  }
+
+  const findAndEdit = function(editDesc, editRating, editTitle, editUrl, id) {
+    store.bookmarks.forEach((item, idx) => {
+      if (item.id === id) {
+        store.bookmarks[idx].desc = editDesc;
+        store.bookmarks[idx].title = editTitle;
+        store.bookmarks[idx].rating = editRating;
+        store.bookmarks[idx].url = editUrl;
+      }
+    });
+  }
+
   return{
     bookmarks: [],
     addBookmark: addBookmark,
     findAndDelete: findAndDelete,
-    filterRating: filterRating
+    filterRating: filterRating,
+    findAndToggleEdit: findAndToggleEdit,
+    findAndToggleExpand: findAndToggleExpand,
+    findAndEdit: findAndEdit
   };
 })();
 store;

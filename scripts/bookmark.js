@@ -15,7 +15,10 @@ const bookmark = (function() {
           <span class="button-label">Show details</button>
         </button>
         <button class="bookmark-item-delete js-bookmark-delete">
-          <span class="button-label">delete</span>
+          <span class="button-label">Delete</span>
+        </button>
+        <button class="bookmark-item-edit js-bookmark-edit">
+          <span class="button-label">Edit</button>
         </button>
       </div>
     </li>
@@ -42,19 +45,41 @@ const bookmark = (function() {
     `
     }
 
-  function generateShoppingItemsString(bookmarkList) {
+  function generateBookmarksFromString(bookmark) {
+    return   `
+    <form class="js-bookmark-form bookmark js-bookmark-element" data-item-id="${bookmark.id}">
+        <input type="text" class="bookmark-item-title" value="${bookmark.title}">
+        <input type="text" class="bookmark-item-description" value="${bookmark.desc}">
+        <input type="text" class="bookmark-item-link" value="${bookmark.url}">
+        <select class="bookmark-item-rating" name="rating-entry">
+          <option value="null">All</option>
+          <option value="1">1 star</option>
+          <option value="2">2 stars</option>
+          <option value="3">3 stars</option>
+          <option value="4">4 stars</option>
+          <option value="5">5 stars</option>
+        </select>
+        <button class="js-save-bookmark-edit" type="submit">Save</button>
+        <button class="js-cancel-bookmark-edit" type="cancel">Cancel</button>
+    </form>
+    `
+  }
+
+  function generateBookmarkItemsString(bookmarkList) {
     const bookmarks = bookmarkList.map((bookmark) => {
-      if (bookmark.expand === true) {
+      if (bookmark.edit === true) {
+        return generateBookmarksFromString(bookmark);
+      } else if (bookmark.expand === true) {
         return generateBookmarksLongString(bookmark);
       } else {
         return generateBookmarksShortString(bookmark);
       }
-    })
+    });
     return bookmarks.join('');
   }
 
   function render(bookmarks = store.bookmarks) { //default value
-    const bookmarksItemString = generateShoppingItemsString(bookmarks);
+    const bookmarksItemString = generateBookmarkItemsString(bookmarks);
     $('.bookmark-list').html(bookmarksItemString);
   }
 
@@ -67,13 +92,7 @@ const bookmark = (function() {
   function handleShowDetails() {
     $('.bookmark-list').on('click', '.js-bookmark-toggle', event => {
       const id = getBookmarkId(event.currentTarget);
-      store.bookmarks.forEach((item, idx) => {
-        if (item.id === id) {
-          store.bookmarks[idx].expand = !store.bookmarks[idx].expand;
-          console.log('STORE ITEM', store.bookmarks[idx])
-          console.log('ITEM RENDER', item)
-        }
-      });
+      store.findAndToggleExpand(id);
       render();
     });
   }
@@ -82,7 +101,6 @@ const bookmark = (function() {
     $('.bookmark-list').on('click', '.js-bookmark-delete', event => {
       const id = getBookmarkId(event.currentTarget);
       api.deleteBookmark(id, () => {
-        console.log(id, 'delete run')
         store.findAndDelete(id);
         render();
       });
@@ -121,10 +139,34 @@ const bookmark = (function() {
   function handleFilterRating() {
     $('.header-rating').on('change', '.rating-filter', () => {
       const setRating = $('.rating-filter').val()
-      console.log(setRating, 'RATING');
       const filtered = store.filterRating(setRating);
-      console.log(filtered);
       render(filtered);
+    });
+  }
+
+
+  function handleEdit() {
+    $('.bookmark-list').on('click', '.js-bookmark-edit', (event) => {
+      event.preventDefault();
+      const id = getBookmarkId(event.currentTarget);
+      store.findAndToggleEdit(id);
+      render();
+    })
+  }
+
+  function handleSaveEdit() {
+    $('.bookmark-list').on('click', '.js-save-bookmark-edit', (event) => {
+      event.preventDefault();
+      const editTitle = $('.bookmark-item-title').val();
+      const editDesc = $('.bookmark-item-description').val();
+      const editUrl = $('.bookmark-item-link').val();
+      const editRating = $('.bookmark-item-rating').val();
+      const id = getBookmarkId(event.currentTarget);
+      api.editBookmark(editDesc, editRating, editTitle, editUrl, id, (editBookmark) => {
+        store.findAndEdit(editDesc, editRating, editTitle, editUrl, id);
+        store.findAndToggleEdit(id)
+        render();
+      })
     });
   }
 
@@ -135,6 +177,8 @@ const bookmark = (function() {
     handleAddBookmark();
     handleSubmitBookmark();
     handleFilterRating();
+    handleEdit();
+    handleSaveEdit()
   };
 
   return{

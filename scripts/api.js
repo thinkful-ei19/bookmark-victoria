@@ -30,10 +30,29 @@ const api = (function () {
     }
     $.ajax(createPayload);
   }
+
+  function editBookmark(desc, rating, title, url, id, callback) {
+    const newBookmark = JSON.stringify({
+      desc: desc,
+      rating: rating,
+      title: title,
+      url: url
+    });
+    const editPayload = {
+      url: `${BASE_URL}/bookmarks/${id}`,
+      method: 'PATCH',
+      contentType: 'application/json',
+      data: newBookmark,
+      success: callback
+    }
+    $.ajax(editPayload);
+  }
+
   return {
     getItems: getItems,
     deleteBookmark: deleteBookmark,
-    createBookmark: createBookmark
+    createBookmark: createBookmark,
+    editBookmark: editBookmark
   };
 })();
 api;
