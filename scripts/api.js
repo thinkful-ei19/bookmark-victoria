@@ -14,9 +14,26 @@ const api = (function () {
     $.ajax(deletePayload);
   }
 
+  function createBookmark(desc, rating, title, url, callback) {
+    const newBookmark = JSON.stringify({
+      desc: desc,
+      rating: rating,
+      title: title,
+      url: url
+    });
+    const createPayload = {
+      url: `${BASE_URL}/bookmarks`,
+      method: 'POST',
+      contentType: 'application/json',
+      data: newBookmark,
+      success: callback
+    }
+    $.ajax(createPayload);
+  }
   return {
     getItems: getItems,
-    deleteBookmark: deleteBookmark
+    deleteBookmark: deleteBookmark,
+    createBookmark: createBookmark
   };
 })();
 api;
