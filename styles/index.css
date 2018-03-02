@@ -62,3 +62,7 @@ table {
   margin: 5px;
   width: 33.3%;
 }
+
+.bookmark-template {
+  display: none;
+}
