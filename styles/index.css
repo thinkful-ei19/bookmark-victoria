@@ -18,7 +18,7 @@ time, mark, audio, video {
 	font: inherit;
 	vertical-align: baseline;
 }
-/* HTML5 display-role reset for older browsers */
+
 article, aside, details, figcaption, figure,
 footer, header, hgroup, menu, nav, section {
 	display: block;
@@ -41,28 +41,72 @@ table {
 	border-collapse: collapse;
 	border-spacing: 0;
 }
+/*
+h2 {
+	display: block;
+	font-size: 25px;
+	margin-top: 5px;
+	margin-bottom: 5px;
+	margin-left: 0;
+	margin-right: 0;
+}
+
+h3 {
+	border-top: 1px solid grey;
+	padding: 7px;
+}
 
 .title {
   text-align: center;
-  background-color: grey;
+  background-color: #cecece;
   border-bottom: 3px solid black;
   font-size: 40px;
   padding: 10px 0px;
 }
 
+
 .row {
   display: flex;
   justify-content: flex-end;
-
+	padding-right: 15px;
+	padding-top: 5px;
 }
+
+.bookmark-item-description {
+		font-style: italic;
+}
+
+.btn {
+	margin: 3px;
+}
+
+.btnLong {
+	margin-top: 15px;
+} */
 
 .bookmark {
-  border: 1px solid black;
-  padding: 5px;
-  margin: 5px;
-  width: 33.3%;
+  /* border: 1px solid black;
+	border-radius: 5px;
+	box-shadow: 5px 10px #cecece;*/
+  padding: 0px;
+	display: inline-block;
+	width:100%;
+	box-sizing: border-box;
+	float: left;
 }
-
+/*
 .bookmark-template {
   display: none;
+} */
+
+@media screen and (min-width: 567px) and (max-width: 800px) {
+  .bookmark {
+      width: 33%;
+  }
 }
+
+/* @media screen and (min-width: 768px) {
+  .bookmark {
+      width: 25%;
+  }
+} */

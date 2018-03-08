@@ -5,20 +5,21 @@ const bookmark = (function() {
     return   `
     <li class="js-bookmark-element bookmark" data-item-id="${item.id}">
       <div class="bookmark-item">
-        <p class="bookmark-item-title">${item.title}</p>
+        <h2 class="bookmark-item-title">${item.title}</h2>
         <p class="bookmark-item-rating">Rating: <span class="rating-stars">${item.rating}</span></p>
-        <p class="bookmark-item-description">${item.desc}</p>
+        <h3 class="bookmark-item-description">${item.desc}</h3>
         <a href="#" class="bookmark-item-link">${item.url}</a>
       </div>
       <div class="item-controls">
-        <button class="bookmark-item-toggle js-bookmark-toggle">
-          <span class="button-label">Show details</button>
+        <button type="button" class="btnLong bookmark-item-toggle js-bookmark-toggle">
+          <i class="rating fa fa-angle-double-up" aria-hidden="true"></i>
         </button>
-        <button class="bookmark-item-delete js-bookmark-delete">
-          <span class="button-label">Delete</span>
+
+        <button type="button" class="btnLong bookmark-item-delete js-bookmark-delete">
+          <i class="far fa-trash-alt"></i>
         </button>
-        <button class="bookmark-item-edit js-bookmark-edit">
-          <span class="button-label">Edit</button>
+        <button class="btnLong bookmark-item-edit js-bookmark-edit">
+          <i class="far fa-edit"></i>
         </button>
       </div>
     </li>
@@ -30,16 +31,16 @@ const bookmark = (function() {
     return   `
     <li class="js-bookmark-element bookmark" data-item-id="${item.id}">
       <div class="bookmark-item">
-        <p class="bookmark-item-title">${item.title}</p>
+        <h2 class="bookmark-item-title">${item.title}</h2>
         <p class="bookmark-item-rating">Rating: <span class="rating-stars">${item.rating}</span></p>
       </div>
       <div class="item-controls">
-        <button class="bookmark-item-toggle js-bookmark-toggle">
-          <span class="button-label">Show details</button>
-        </button>
-        <button class="bookmark-item-delete js-bookmark-delete">
-          <span class="button-label">delete</span>
-        </button>
+      <button type="button" class="btn bookmark-item-toggle js-bookmark-toggle">
+        <i class="fa fa-angle-double-down" aria-hidden="true"></i>
+      </button>
+      <button type="button" class="btn bookmark-item-delete js-bookmark-delete">
+        <i class="far fa-trash-alt"></i>
+      </button>
       </div>
     </li>
     `
@@ -47,7 +48,7 @@ const bookmark = (function() {
 
   function generateBookmarksFromString(bookmark) {
     return   `
-    <form class="js-bookmark-form bookmark js-bookmark-element" data-item-id="${bookmark.id}">
+    <form class="js-bookmark-form js-bookmark-element" data-item-id="${bookmark.id}">
         Title: <input type="text" class="bookmark-item-title-edit" value="${bookmark.title}">
         Description: <input type="text" class="bookmark-item-description-edit" value="${bookmark.desc}">
         URL: <input type="text" class="bookmark-item-link-edit" value="${bookmark.url}">
@@ -117,19 +118,46 @@ const bookmark = (function() {
     })
   }
 
-  function handleSubmitBookmark() {
-    $('.js-bookmark-template').on('click', '.js-submit-bookmark', (event) => {
-      event.preventDefault();
-      const newTitle = $('.title-add').val();
-      const newUrl = $('.url-add').val();
-      const newDesc = $('.description-add').val();
-      const newRating = $('.rating-add').val();
-      api.createBookmark(newDesc, newRating, newTitle, newUrl, (newBookmark) => {
-        store.addBookmark(newBookmark);
-        render();
-      })
-    });
-  }
+    const isTitleValid = function(title) {
+      if (title) {
+        return title
+      } else {
+        $('.title-add').after('<p>Name your bookmark before adding</p>');
+      }
+    };
+    const isUrlValid = function(url) {
+      if (url.match(/^(?:http(s)?:\/\/)?[\w.-]+(?:\.[\w\.-]+)+[\w\-\._~:/?#[\]@!\$&'\(\)\*\+,;=.]+$/g)) {
+        return url
+      } else {
+        $('.url-add').after('<p>Add bookmark URL</p>');
+      }
+    };
+
+    const isRatingValid = function(rating) {
+      if (rating >= 1) {
+        return rating
+      } else {
+        $('.rating-add').after('<p>Rate your bookmark</p>');
+      }
+    };
+
+    function handleSubmitBookmark() {
+      $('.js-bookmark-template').on('click', '.js-submit-bookmark', (event) => {
+        event.preventDefault();
+        const newTitle = $('.title-add').val();
+        const newUrl = $('.url-add').val();
+        const newDesc = $('.description-add').val();
+        const newRating = $('.rating-add').val();
+        if (isTitleValid(newTitle) && isUrlValid(newUrl) && isRatingValid(newRating)){
+          api.createBookmark(newDesc, newRating, newTitle, newUrl, (newBookmark) => {
+            store.addBookmark(newBookmark);
+            render();
+          })
+        } else {
+          return
+        }
+      });
+    }
 
   function handleFilterRating() {
     $('.header-rating').on('change', '.rating-filter', () => {
