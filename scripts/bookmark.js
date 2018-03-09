@@ -48,7 +48,7 @@ const bookmark = (function() {
 
   function generateBookmarksFromString(bookmark) {
     return   `
-    <form role="form" class="js-bookmark-form js-bookmark-element" data-item-id="${bookmark.id}">
+    <form role="form" class="js-bookmark-form js-bookmark-element bookmark" data-item-id="${bookmark.id}">
         Title: <input type="text" class="bookmark-item-title-edit" value="${bookmark.title}">
         Description: <input type="text" class="bookmark-item-description-edit" value="${bookmark.desc}">
         URL: <input type="text" class="bookmark-item-link-edit" value="${bookmark.url}">
