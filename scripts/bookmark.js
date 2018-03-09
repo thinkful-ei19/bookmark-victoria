@@ -3,7 +3,7 @@ const bookmark = (function() {
   function generateBookmarksLongString(item) {
     let itemTitle = `<span class="bookmark-item-list">${item.name}</span>`
     return   `
-    <li class="js-bookmark-element bookmark" data-item-id="${item.id}">
+    <li role="region" class="js-bookmark-element bookmark" data-item-id="${item.id}">
       <div class="bookmark-item">
         <h2 class="bookmark-item-title">${item.title}</h2>
         <p class="bookmark-item-rating">Rating: <span class="rating-stars">${item.rating}</span></p>
@@ -11,14 +11,14 @@ const bookmark = (function() {
         <a href="#" class="bookmark-item-link">${item.url}</a>
       </div>
       <div class="item-controls">
-        <button type="button" class="btnLong bookmark-item-toggle js-bookmark-toggle">
+        <button type="button" role="button" class="btnLong bookmark-item-toggle js-bookmark-toggle">
           <i class="rating fa fa-angle-double-up" aria-hidden="true"></i>
         </button>
 
-        <button type="button" class="btnLong bookmark-item-delete js-bookmark-delete">
+        <button type="button" role="button" class="btnLong bookmark-item-delete js-bookmark-delete">
           <i class="far fa-trash-alt"></i>
         </button>
-        <button class="btnLong bookmark-item-edit js-bookmark-edit">
+        <button role="button" class="btnLong bookmark-item-edit js-bookmark-edit">
           <i class="far fa-edit"></i>
         </button>
       </div>
@@ -29,16 +29,16 @@ const bookmark = (function() {
   function generateBookmarksShortString(item) {
     let itemTitle = `<span class="bookmark-item-list">${item.name}</span>`
     return   `
-    <li class="js-bookmark-element bookmark" data-item-id="${item.id}">
+    <li role="region" class="js-bookmark-element bookmark" data-item-id="${item.id}">
       <div class="bookmark-item">
         <h2 class="bookmark-item-title">${item.title}</h2>
         <p class="bookmark-item-rating">Rating: <span class="rating-stars">${item.rating}</span></p>
       </div>
       <div class="item-controls">
-      <button type="button" class="btn bookmark-item-toggle js-bookmark-toggle">
+      <button type="button" role="button" class="btn bookmark-item-toggle js-bookmark-toggle">
         <i class="fa fa-angle-double-down" aria-hidden="true"></i>
       </button>
-      <button type="button" class="btn bookmark-item-delete js-bookmark-delete">
+      <button type="button" role="button" class="btn bookmark-item-delete js-bookmark-delete">
         <i class="far fa-trash-alt"></i>
       </button>
       </div>
@@ -48,7 +48,7 @@ const bookmark = (function() {
 
   function generateBookmarksFromString(bookmark) {
     return   `
-    <form class="js-bookmark-form js-bookmark-element" data-item-id="${bookmark.id}">
+    <form role="form" class="js-bookmark-form js-bookmark-element" data-item-id="${bookmark.id}">
         Title: <input type="text" class="bookmark-item-title-edit" value="${bookmark.title}">
         Description: <input type="text" class="bookmark-item-description-edit" value="${bookmark.desc}">
         URL: <input type="text" class="bookmark-item-link-edit" value="${bookmark.url}">
@@ -59,8 +59,8 @@ const bookmark = (function() {
           <option value="4">4 stars</option>
           <option value="5">5 stars</option>
         </select>
-        <button class="js-save-bookmark-edit" type="submit">Save</button>
-        <button class="js-cancel-bookmark-edit" type="cancel">Cancel</button>
+        <button role="button" class="js-save-bookmark-edit" type="submit">Save</button>
+        <button role="button" class="js-cancel-bookmark-edit" type="cancel">Cancel</button>
     </form>
     `
   }
