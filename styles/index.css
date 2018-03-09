@@ -41,7 +41,7 @@ table {
 	border-collapse: collapse;
 	border-spacing: 0;
 }
-/*
+
 h2 {
 	display: block;
 	font-size: 25px;
@@ -82,31 +82,32 @@ h3 {
 
 .btnLong {
 	margin-top: 15px;
-} */
+}
 
 .bookmark {
-  /* border: 1px solid black;
+  border: 1px solid black;
 	border-radius: 5px;
-	box-shadow: 5px 10px #cecece;*/
-  padding: 0px;
+	box-shadow: 5px 10px #cecece;
+  padding: 15px;
+	margin: 10px;
 	display: inline-block;
 	width:100%;
 	box-sizing: border-box;
 	float: left;
 }
-/*
+
 .bookmark-template {
   display: none;
-} */
+}
 
-@media screen and (min-width: 567px) and (max-width: 800px) {
+@media screen and (min-width: 567px) {
   .bookmark {
-      width: 33%;
+      width: 45%;
   }
 }
 
-/* @media screen and (min-width: 768px) {
+@media screen and (min-width: 768px) {
   .bookmark {
-      width: 25%;
+      width: 30%;
   }
-} */
+}

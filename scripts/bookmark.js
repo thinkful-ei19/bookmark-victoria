@@ -122,14 +122,14 @@ const bookmark = (function() {
       if (title) {
         return title
       } else {
-        $('.title-add').after('<p>Name your bookmark before adding</p>');
+        $('.title-add').after('<p>! Name your bookmark before adding</p>');
       }
     };
     const isUrlValid = function(url) {
       if (url.match(/^(?:http(s)?:\/\/)?[\w.-]+(?:\.[\w\.-]+)+[\w\-\._~:/?#[\]@!\$&'\(\)\*\+,;=.]+$/g)) {
         return url
       } else {
-        $('.url-add').after('<p>Add bookmark URL</p>');
+        $('.url-add').after('<p>! Add bookmark URL</p>');
       }
     };
 
@@ -137,7 +137,7 @@ const bookmark = (function() {
       if (rating >= 1) {
         return rating
       } else {
-        $('.rating-add').after('<p>Rate your bookmark</p>');
+        $('.rating-add').after('<p>! Rate your bookmark</p>');
       }
     };
 
